@@ -1,5 +1,6 @@
 package io.kmruiz.fa.infrastructure;
 
+import io.kmruiz.fa.domain.listing.ListingFunnel;
 import io.kmruiz.fa.domain.listing.ListingMaterializer;
 import io.kmruiz.fa.domain.listing.ListingProvider;
 import io.kmruiz.fa.infrastructure.handlers.ListingHandler;
@@ -17,8 +18,8 @@ import static org.springframework.web.reactive.function.server.RouterFunctions.t
 @Configuration
 public class ServerConfiguration {
     @Bean
-    public SearchFunnelHandler searchFunnel() {
-        return new SearchFunnelHandler();
+    public SearchFunnelHandler searchFunnel(ListingFunnel funnel) {
+        return new SearchFunnelHandler(funnel);
     }
 
     @Bean

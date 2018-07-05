@@ -36,6 +36,8 @@ dependencies {
     compile group: 'net.manub', name: 'scalatest-embedded-kafka_2.12', version: '1.0.0'
     compile('org.apache.kafka:kafka-streams:1.0.0')
 
+    compile group: 'org.elasticsearch.client', name: 'elasticsearch-rest-high-level-client', version: '6.3.0'
+
     testCompile('org.springframework.boot:spring-boot-starter-test')
     testCompile('io.projectreactor:reactor-test')
 }

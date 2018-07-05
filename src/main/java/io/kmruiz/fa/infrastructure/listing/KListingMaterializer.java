@@ -24,8 +24,7 @@ public class KListingMaterializer implements ListingMaterializer {
             String listingJson = objectMapper.writeValueAsString(listing);
             ListenableFuture<SendResult<String, String>> completion = kafka.send("listings", listing.uuid.toString(), listingJson);
 
-            return Mono.fromFuture(completion.completable())
-                    .map(r -> listing);
+            return Mono.fromFuture(completion.completable()).map(r -> listing);
         } catch (JsonProcessingException e) {
             return Mono.error(e);
         }
