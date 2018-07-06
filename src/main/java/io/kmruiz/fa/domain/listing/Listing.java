@@ -1,11 +1,13 @@
 package io.kmruiz.fa.domain.listing;
 
+import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.util.MultiValueMap;
 import reactor.core.publisher.Mono;
 
 import java.util.*;
 import java.util.function.Function;
 
+@Document(indexName="listings")
 public class Listing {
     public final UUID uuid;
     public final String title;
