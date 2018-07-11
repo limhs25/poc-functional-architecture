@@ -1,5 +1,6 @@
 package io.kmruiz.fa.infrastructure;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.kmruiz.fa.infrastructure.streams.ListingStoreMaterializer;
 import org.apache.kafka.common.serialization.Serdes;
 import org.apache.kafka.common.serialization.StringSerializer;
@@ -9,7 +10,7 @@ import org.apache.kafka.streams.StreamsConfig;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.DependsOn;
+import org.springframework.data.elasticsearch.core.ElasticsearchTemplate;
 import org.springframework.kafka.core.DefaultKafkaProducerFactory;
 import org.springframework.kafka.core.KafkaTemplate;
 
@@ -47,9 +48,9 @@ public class KafkaConfiguration {
     }
 
     @Bean
-    public StreamsBuilder streamsBuilder() {
+    public StreamsBuilder streamsBuilder(ElasticsearchTemplate template, ObjectMapper objectMapper) {
         StreamsBuilder streamsBuilder = new StreamsBuilder();
-        ListingStoreMaterializer.apply(streamsBuilder);
+        new ListingStoreMaterializer(template, objectMapper).apply(streamsBuilder);
         return streamsBuilder;
     }
 

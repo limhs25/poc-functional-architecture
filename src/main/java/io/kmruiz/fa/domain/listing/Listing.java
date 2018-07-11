@@ -1,19 +1,28 @@
 package io.kmruiz.fa.domain.listing;
 
+import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.Document;
+import org.springframework.data.elasticsearch.annotations.Field;
+import org.springframework.data.elasticsearch.annotations.FieldType;
 import org.springframework.util.MultiValueMap;
 import reactor.core.publisher.Mono;
 
 import java.util.*;
 import java.util.function.Function;
 
-@Document(indexName="listings")
+@Document(indexName = "listings")
 public class Listing {
+    @Id
     public final UUID uuid;
+    @Field(type = FieldType.Text, fielddata = true, store = true)
     public final String title;
+    @Field(type = FieldType.Text, fielddata = true, store = true)
     public final List<String> labels;
+    @Field(type = FieldType.Text, fielddata = true, store = true)
     public final String description;
+    @Field(type = FieldType.Text, fielddata = true, store = true)
     public final String price;
+    @Field(type = FieldType.Long, store = true)
     public final int likes;
 
     private Listing(UUID uuid, String title, List<String> labels, String description, String price, int likes) {
@@ -45,5 +54,4 @@ public class Listing {
     public static Function<Listing, Listing> like() {
         return listing -> new Listing(listing.uuid, listing.title, listing.labels, listing.description, listing.price, listing.likes + 1);
     }
-
 }

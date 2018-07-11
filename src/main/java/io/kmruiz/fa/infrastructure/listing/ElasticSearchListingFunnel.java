@@ -18,13 +18,16 @@ public class ElasticSearchListingFunnel implements ListingFunnel {
 
     public ElasticSearchListingFunnel(ElasticsearchTemplate template) {
         this.template = template;
+
+        template.createIndex(Listing.class);
+        template.putMapping(Listing.class);
     }
 
     @Override
     public Flux<Listing> search(Optional<String> fullTextSearch, Optional<String> orderBy, String orderDirection) {
         Criteria criteria = new Criteria();
         if (fullTextSearch.isPresent()) {
-            criteria = criteria.and("fullTextSearch").contains(fullTextSearch.get());
+            criteria = criteria.and("title").contains(fullTextSearch.get());
         }
 
         CriteriaQuery query = new CriteriaQuery(criteria,
